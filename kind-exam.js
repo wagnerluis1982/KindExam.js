@@ -21,14 +21,10 @@ class Exam {
 
     section(name, questions) {
         this.sections[name] = Object.freeze(questions);
-        for (let i in questions) {
-            this.inputs.push(null);
-        }
     }
 
     render() {
         const exam = this;
-        let questionNumber = 0;
 
         for (let name in exam.sections) {
             const questions = exam.sections[name];
@@ -39,7 +35,8 @@ class Exam {
                 .append($container);
 
             questions.forEach(function (entry) {
-                const qnum = questionNumber++;
+                const qnum = exam.inputs.length;
+                exam.inputs.push(null);
 
                 $container.append(`<dt id="_${qnum}_">${entry.q}</dt>`);
 
