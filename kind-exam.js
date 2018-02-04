@@ -1,5 +1,7 @@
 class Exam {
-    constructor() {
+    constructor(selector) {
+        this.$mainContainer = $(selector).addClass('exam-questions');
+
         this.sections = {};
         this.inputs = [];
     }
@@ -11,19 +13,15 @@ class Exam {
         }
     }
 
-    render(selector) {
+    render() {
         const exam = this;
-        const $mainContainer = $(selector);
-
-        $mainContainer.addClass('exam-questions');
-
         let questionNumber = 0;
 
         for (let name in exam.sections) {
             const questions = exam.sections[name];
             const $container = $('<dl></dl>');
 
-            $mainContainer
+            exam.$mainContainer
                 .append(`<h2>${name}</h2>`)
                 .append($container);
 
