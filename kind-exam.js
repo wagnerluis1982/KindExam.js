@@ -41,7 +41,7 @@ class Exam {
             questions.forEach(function (entry) {
                 const qnum = questionNumber++;
 
-                $(`<dt id="_${qnum}_">${entry.q}</dt>`).appendTo($container);
+                $container.append(`<dt id="_${qnum}_">${entry.q}</dt>`);
 
                 if (entry.snippet !== undefined) {
                     $('<pre></pre>').appendTo($container)
@@ -55,12 +55,13 @@ class Exam {
 
                 entry.answers.forEach(function (answer, i) {
                     $('<li></li>').appendTo($answersList)
-                        .append(`<input type="radio" id="_${qnum}-${i}_" name="_${qnum}_"> `)
+                        .append(`<input type="radio" name="_${qnum}_"> `)
                         .click(function () {
-                            document.getElementById(`_${qnum}-${i}_`).checked = true;
+                            this.firstElementChild.checked = true;
                             exam.inputs[qnum] = String.fromCharCode(i + 65);
                         })
-                        .append(`<label for="_${qnum}-${i}_"></label>`).find('label')
+                        .append('<span></span>')
+                        .find('span')
                         .append(document.createTextNode(answer));
                 });
             });
