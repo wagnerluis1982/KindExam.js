@@ -1,6 +1,6 @@
 class Exam {
     constructor(selector, userConfig) {
-        this.$mainContainer = $(selector).addClass('exam-questions');
+        this.$mainContainer = $(selector).addClass('kind-exam');
 
         this.sections = {};
         this.inputs = [];
@@ -42,20 +42,20 @@ class Exam {
                 const qnum = exam.inputs.length;
                 exam.inputs.push(null);
 
-                $container.append(`<dt id="${idFor(qnum)}">${entry.q}</dt>`);
+                $container.append(`<dt id="${idFor(qnum)}" class="kind-exam-question">${entry.q}</dt>`);
 
                 if (entry.snippet !== undefined) {
                     $('<pre></pre>').appendTo($container)
                         .text(entry.snippet.code)
-                        .wrap('<dd></dd>');
+                        .wrap('<dd class="kind-exam-answer"></dd>');
                 }
 
                 const $answersList = $('<ol type="a"></ol>');
-                $('<dd></dd>').appendTo($container)
+                $('<dd class="kind-exam-answer"></dd>').appendTo($container)
                     .append($answersList);
 
                 entry.answers.forEach(function (answer, i) {
-                    $('<li></li>').appendTo($answersList)
+                    $('<li class="kind-exam-option"></li>').appendTo($answersList)
                         .append(`<input type="radio" name="${idFor(qnum)}"> `)
                         .click(function () {
                             this.firstElementChild.checked = true;
@@ -100,6 +100,6 @@ class Exam {
 // Set a counter to show the question numbers
 (function () {
     const css = document.styleSheets[document.styleSheets.length - 1];
-    css.insertRule('.exam-questions { counter-reset: exam-counter; }');
-    css.insertRule('.exam-questions dt:before { content: counter(exam-counter); counter-increment: exam-counter; }');
+    css.insertRule('.kind-exam { counter-reset: exam-counter; }');
+    css.insertRule('.kind-exam .kind-exam-question:before { content: counter(exam-counter); counter-increment: exam-counter; }');
 })();

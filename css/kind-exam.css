@@ -1,0 +1,40 @@
+.kind-exam .kind-exam-question {
+    font-weight: bold;
+}
+
+.kind-exam .kind-exam-question:before {
+    margin-right: 0.5em;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+
+.kind-exam .kind-exam-option input:checked + span {
+    font-weight: bold;
+}
+
+.kind-exam .kind-exam-answer {
+    margin-left: 0;
+}
+
+@media screen {
+    .kind-exam .kind-exam-option {
+        border: solid transparent;
+        border-radius: .25em;
+    }
+
+    .kind-exam .kind-exam-option:hover {
+        background-color: #dcddde;
+        border-color: #dcddde;
+        cursor: pointer;
+    }
+
+    .kind-exam .kind-exam-option:hover * {
+        cursor: pointer;
+    }
+}
+
+@media print {
+    .kind-exam .kind-exam-question, .kind-exam .kind-exam-answer {
+        page-break-inside: avoid;
+    }
+}
