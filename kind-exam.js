@@ -4,6 +4,7 @@ class Exam {
 
         this.sections = {};
         this.inputs = [];
+        this.feedbackConfig = {};
     }
 
     section(name, questions) {
@@ -11,6 +12,17 @@ class Exam {
         for (let i in questions) {
             this.inputs.push(null);
         }
+    }
+
+    setupFeedback(config) {
+        if (!config) {
+            throw "Invalid config passed";
+        }
+
+        const fbConfig = this.feedbackConfig;
+        fbConfig.button = config.button || fbConfig.button;
+        fbConfig.warning = config.warning || fbConfig.warning;
+        fbConfig.filename = config.filename || fbConfig.filename;
     }
 
     render() {
@@ -53,21 +65,32 @@ class Exam {
             });
         }
 
-        if (exam.answersLink !== undefined) {
-            $(exam.answersLink)
-                .css('cursor', 'pointer')
-                .click(function () {
-                    const qnum = exam.inputs.indexOf(null);
+        const fbConfig = exam.feedbackConfig;
+        const buttonText  = fbConfig.button   || 'Finish the exam';
+        const warningText = fbConfig.warning  || 'The question {} was not answered!';
+        const filename    = fbConfig.filename || 'answers.csv';
 
-                    if (qnum !== -1) {
-                        document.getElementById(`_${qnum}_`).scrollIntoView();
-                        alert(`The question ${qnum + 1} was not answered!`);
-                        return false;
-                    }
+        $('<button></button>').appendTo(exam.$mainContainer)
+            .css('cursor', 'pointer')
+            .text(buttonText)
+            .click(function () {
+                const qnum = exam.inputs.indexOf(null);
 
-                    this.setAttribute('href', "data:text/csv," + encodeURI(exam.inputs.join('\n')));
-                });
-        }
+                if (qnum !== -1) {
+                    document.getElementById(`_${qnum}_`).scrollIntoView();
+                    location.hash = `#_${qnum}_`;
+                    alert(warningText.replace('{}', qnum + 1));
+                    return false;
+                }
+
+                const link = document.createElement('a');
+                link.href = "data:text/csv," + encodeURI(exam.inputs.join('\n'));
+                link.download = filename;
+                link.style.display = 'none';
+
+                document.body.appendChild(link);
+                link.click();
+            });
     }
 }
 
