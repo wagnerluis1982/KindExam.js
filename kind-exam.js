@@ -1,10 +1,22 @@
 class Exam {
-    constructor(selector) {
+    constructor(selector, userConfig) {
         this.$mainContainer = $(selector).addClass('exam-questions');
 
         this.sections = {};
         this.inputs = [];
-        this.feedbackConfig = {};
+        this.config = {};
+
+        if (userConfig) {
+            if (userConfig.feedback) {
+                const defaults = {
+                    button  : 'Finish the exam',
+                    warning : 'The question {} was not answered!',
+                    filename: 'answers.csv'
+                };
+
+                this.config.feedback = Object.assign(defaults, userConfig.feedback);
+            }
+        }
     }
 
     section(name, questions) {
@@ -12,17 +24,6 @@ class Exam {
         for (let i in questions) {
             this.inputs.push(null);
         }
-    }
-
-    setupFeedback(config) {
-        if (!config) {
-            throw "Invalid config passed";
-        }
-
-        const fbConfig = this.feedbackConfig;
-        fbConfig.button = config.button || fbConfig.button;
-        fbConfig.warning = config.warning || fbConfig.warning;
-        fbConfig.filename = config.filename || fbConfig.filename;
     }
 
     render() {
@@ -65,32 +66,31 @@ class Exam {
             });
         }
 
-        const fbConfig = exam.feedbackConfig;
-        const buttonText  = fbConfig.button   || 'Finish the exam';
-        const warningText = fbConfig.warning  || 'The question {} was not answered!';
-        const filename    = fbConfig.filename || 'answers.csv';
+        if (exam.config.feedback) {
+            const feedback = exam.config.feedback;
 
-        $('<button></button>').appendTo(exam.$mainContainer)
-            .css('cursor', 'pointer')
-            .text(buttonText)
-            .click(function () {
-                const qnum = exam.inputs.indexOf(null);
+            $('<button></button>').appendTo(exam.$mainContainer)
+                .css('cursor', 'pointer')
+                .text(feedback.button)
+                .click(function () {
+                    const qnum = exam.inputs.indexOf(null);
 
-                if (qnum !== -1) {
-                    document.getElementById(`_${qnum}_`).scrollIntoView();
-                    location.hash = `#_${qnum}_`;
-                    alert(warningText.replace('{}', qnum + 1));
-                    return false;
-                }
+                    if (qnum !== -1) {
+                        document.getElementById(`_${qnum}_`).scrollIntoView();
+                        location.hash = `#_${qnum}_`;
+                        alert(feedback.warning.replace('{}', qnum + 1));
+                        return false;
+                    }
 
-                const link = document.createElement('a');
-                link.href = "data:text/csv," + encodeURI(exam.inputs.join('\n'));
-                link.download = filename;
-                link.style.display = 'none';
+                    const link = document.createElement('a');
+                    link.href = "data:text/csv," + encodeURI(exam.inputs.join('\n'));
+                    link.download = feedback.filename;
+                    link.style.display = 'none';
 
-                document.body.appendChild(link);
-                link.click();
-            });
+                    document.body.appendChild(link);
+                    link.click();
+                });
+        }
     }
 }
 
