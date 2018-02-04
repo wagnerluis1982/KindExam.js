@@ -24,6 +24,10 @@ class Exam {
     }
 
     render() {
+        function idFor(x) {
+            return `_q${x + 1}_`;
+        }
+
         const exam = this;
 
         for (let name in exam.sections) {
@@ -38,7 +42,7 @@ class Exam {
                 const qnum = exam.inputs.length;
                 exam.inputs.push(null);
 
-                $container.append(`<dt id="_${qnum}_">${entry.q}</dt>`);
+                $container.append(`<dt id="${idFor(qnum)}">${entry.q}</dt>`);
 
                 if (entry.snippet !== undefined) {
                     $('<pre></pre>').appendTo($container)
@@ -52,7 +56,7 @@ class Exam {
 
                 entry.answers.forEach(function (answer, i) {
                     $('<li></li>').appendTo($answersList)
-                        .append(`<input type="radio" name="_${qnum}_"> `)
+                        .append(`<input type="radio" name="${idFor(qnum)}"> `)
                         .click(function () {
                             this.firstElementChild.checked = true;
                             exam.inputs[qnum] = String.fromCharCode(i + 65);
@@ -74,8 +78,9 @@ class Exam {
                     const qnum = exam.inputs.indexOf(null);
 
                     if (qnum !== -1) {
-                        document.getElementById(`_${qnum}_`).scrollIntoView();
-                        location.hash = `#_${qnum}_`;
+                        const id = idFor(qnum);
+                        document.getElementById(id).scrollIntoView();
+                        location.hash = id;
                         alert(feedback.warning.replace('{}', qnum + 1));
                         return false;
                     }
