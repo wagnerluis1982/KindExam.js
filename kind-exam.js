@@ -23,7 +23,7 @@ class Exam {
         this.sections[name] = Object.freeze(questions);
     }
 
-    render() {
+    finale() {
         function idFor(x) {
             return `_q${x + 1}_`;
         }
