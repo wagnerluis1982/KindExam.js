@@ -1,3 +1,5 @@
+{
+
 class Exam {
     constructor(selector, userConfig) {
         this.$mainContainer = $(selector).addClass('kind-exam');
@@ -111,8 +113,13 @@ class Exam {
 }
 
 // Set a counter to show the question numbers
-(function () {
+{
     const css = document.styleSheets[document.styleSheets.length - 1];
     css.insertRule('.kind-exam { counter-reset: exam-counter; }');
     css.insertRule('.kind-exam .kind-exam-question:before { content: counter(exam-counter); counter-increment: exam-counter; }');
-})();
+}
+
+// Globals
+window.Exam = Exam;
+
+}
