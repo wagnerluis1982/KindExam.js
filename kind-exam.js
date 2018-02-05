@@ -32,10 +32,6 @@ class Exam {
     }
 
     finale() {
-        function idFor(x) {
-            return `_q${x + 1}_`;
-        }
-
         const exam = this;
 
         for (let name in exam.sections) {
@@ -62,27 +58,19 @@ class Exam {
                 $('<dd class="kind-exam-answer"></dd>').appendTo($container)
                     .append($answersList);
 
-                function option(i) {
-                    return $('<li class="kind-exam-option"></li>').appendTo($answersList)
-                        .append(`<input type="radio" name="${idFor(qnum)}"> `)
-                        .click(function () {
-                            this.firstElementChild.checked = true;
-                            exam.inputs[qnum] = String.fromCharCode(i + 65);
-                        })
-                        .append('<span></span>')
-                        .find('span');
-                }
-
                 entry.answers.forEach(function (answer, i) {
-                    option(i).text(answer);
+                    makeOption(qnum, i, $answersList)
+                        .text(answer);
                 });
 
                 if (exam.config.understanding) {
-                    option(entry.answers.length).html(`<small>${exam.config.understanding}</small>`);
+                    makeOption(qnum, entry.answers.length, $answersList)
+                        .html(`<small>${exam.config.understanding}</small>`);
                 }
             });
         }
 
+        // Show feedback button if asked
         if (exam.config.feedback) {
             const feedback = exam.config.feedback;
 
@@ -110,6 +98,21 @@ class Exam {
                 });
         }
     }
+}
+
+function idFor(x) {
+    return `_q${x + 1}_`;
+}
+
+function makeOption(questionIdx, answerIdx, $answerContainer) {
+    return $('<li class="kind-exam-option"></li>').appendTo($answerContainer)
+        .append(`<input type="radio" name="${idFor(questionIdx)}"> `)
+        .click(function () {
+            this.firstElementChild.checked = true;
+            exam.inputs[questionIdx] = String.fromCharCode(answerIdx + 65);
+        })
+        .append('<span></span>')
+        .find('span');
 }
 
 // Set a counter to show the question numbers
