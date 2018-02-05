@@ -12,8 +12,12 @@
     font-weight: bold;
 }
 
-.kind-exam .kind-exam-answer {
+.kind-exam .kind-exam-section > * {
     margin-left: 0;
+}
+
+.kind-exam .kind-exam-idontknow {
+    font-size: smaller;
 }
 
 @media screen {
@@ -34,7 +38,7 @@
 }
 
 @media print {
-    .kind-exam .kind-exam-question, .kind-exam .kind-exam-answer {
+    .kind-exam-section > * {
         page-break-inside: avoid;
     }
 }

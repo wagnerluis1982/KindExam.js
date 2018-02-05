@@ -36,7 +36,7 @@ class Exam {
 
         for (let name in exam.sections) {
             const questions = exam.sections[name];
-            const $container = $('<dl></dl>');
+            const $container = $('<dl class="kind-exam-section"></dl>');
 
             exam.$mainContainer
                 .append(`<h2>${name}</h2>`)
@@ -54,7 +54,7 @@ class Exam {
                 if (entry.snippet !== undefined) {
                     $('<pre></pre>').appendTo($container)
                         .text(entry.snippet.code)
-                        .wrap('<dd class="kind-exam-answer"></dd>');
+                        .wrap('<dd class="kind-exam-description"></dd>');
                 }
 
                 // Add answer choices
@@ -70,7 +70,8 @@ class Exam {
                 // Add a "I don't know" answer choice
                 if (exam.config.understanding) {
                     makeOption(qnum, entry.answers.length, $answersList)
-                        .html(`<small>${exam.config.understanding}</small>`);
+                        .addClass('kind-exam-idontknow')
+                        .html(exam.config.understanding);
                 }
             });
         }
