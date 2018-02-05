@@ -16,6 +16,12 @@ class Exam {
 
                 this.config.feedback = Object.assign(defaults, userConfig.feedback);
             }
+
+            if (userConfig.understanding) {
+                this.config.understanding = typeof userConfig.understanding === "string"
+                    ? userConfig.understanding
+                    : "I don't know";
+            }
         }
     }
 
@@ -54,17 +60,24 @@ class Exam {
                 $('<dd class="kind-exam-answer"></dd>').appendTo($container)
                     .append($answersList);
 
-                entry.answers.forEach(function (answer, i) {
-                    $('<li class="kind-exam-option"></li>').appendTo($answersList)
+                function option(i) {
+                    return $('<li class="kind-exam-option"></li>').appendTo($answersList)
                         .append(`<input type="radio" name="${idFor(qnum)}"> `)
                         .click(function () {
                             this.firstElementChild.checked = true;
                             exam.inputs[qnum] = String.fromCharCode(i + 65);
                         })
                         .append('<span></span>')
-                        .find('span')
-                        .append(document.createTextNode(answer));
+                        .find('span');
+                }
+
+                entry.answers.forEach(function (answer, i) {
+                    option(i).text(answer);
                 });
+
+                if (exam.config.understanding) {
+                    option(entry.answers.length).html(`<small>${exam.config.understanding}</small>`);
+                }
             });
         }
 
