@@ -43,17 +43,21 @@ class Exam {
                 .append($container);
 
             questions.forEach(function (entry) {
+                // Current question number
                 const qnum = exam.inputs.length;
                 exam.inputs.push(null);
 
+                // Start a new question
                 $container.append(`<dt id="${idFor(qnum)}" class="kind-exam-question">${entry.q}</dt>`);
 
+                // Add <pre>code</pre> if needed
                 if (entry.snippet !== undefined) {
                     $('<pre></pre>').appendTo($container)
                         .text(entry.snippet.code)
                         .wrap('<dd class="kind-exam-answer"></dd>');
                 }
 
+                // Add answer choices
                 const $answersList = $('<ol type="a"></ol>');
                 $('<dd class="kind-exam-answer"></dd>').appendTo($container)
                     .append($answersList);
@@ -63,6 +67,7 @@ class Exam {
                         .text(answer);
                 });
 
+                // Add a "I don't know" answer choice
                 if (exam.config.understanding) {
                     makeOption(qnum, entry.answers.length, $answersList)
                         .html(`<small>${exam.config.understanding}</small>`);
@@ -105,7 +110,7 @@ function idFor(x) {
 }
 
 function makeOption(questionIdx, answerIdx, $answerContainer) {
-    return $('<li class="kind-exam-option"></li>').appendTo($answerContainer)
+    return $('<li class="kind-exam-choice"></li>').appendTo($answerContainer)
         .append(`<input type="radio" name="${idFor(questionIdx)}"> `)
         .click(function () {
             this.firstElementChild.checked = true;

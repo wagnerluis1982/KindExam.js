@@ -8,7 +8,7 @@
     vertical-align: middle;
 }
 
-.kind-exam .kind-exam-option input:checked + span {
+.kind-exam .kind-exam-choice input:checked + span {
     font-weight: bold;
 }
 
@@ -17,18 +17,18 @@
 }
 
 @media screen {
-    .kind-exam .kind-exam-option {
+    .kind-exam .kind-exam-choice {
         border: solid transparent;
         border-radius: .25em;
     }
 
-    .kind-exam .kind-exam-option:hover {
+    .kind-exam .kind-exam-choice:hover {
         background-color: #dcddde;
         border-color: #dcddde;
         cursor: pointer;
     }
 
-    .kind-exam .kind-exam-option:hover * {
+    .kind-exam .kind-exam-choice:hover * {
         cursor: pointer;
     }
 }
