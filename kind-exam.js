@@ -1,6 +1,8 @@
 {
 
 class Exam {
+    static get FIX() { return Symbol.for('FIX') }
+
     constructor(selector, userConfig) {
         this.$mainContainer = $(selector).addClass('kind-exam');
 
@@ -87,10 +89,17 @@ class Exam {
                             exam.inputs[qnum] = this.innerText.replace(/[\r\n]/g, '');
                         });
 
-                    if (entry.fix) {
-                        $inputAnswer
-                            .css('white-space', 'pre')
-                            .text(entry.snippet.code);
+                    // check for input settings
+                    if (entry.input) {
+                        if (entry.input.code) {
+                            $inputAnswer.css('white-space', 'pre');
+
+                            if (typeof entry.input.code === 'string')
+                                $inputAnswer.text(entry.input.code);
+
+                            else if (entry.input.code === Exam.FIX)
+                                $inputAnswer.text(entry.snippet.code);
+                        }
                     }
                 }
             });
