@@ -64,7 +64,7 @@ class Exam {
                         .append($answersList);
 
                     entry.answers.forEach(function (answer, i) {
-                        const option = makeOption(qnum, i, $answersList);
+                        const option = makeOption(exam, qnum, i, $answersList);
                         if (typeof answer === 'string') {
                             option.text(answer);
                         } else {
@@ -74,7 +74,7 @@ class Exam {
 
                     // Add a "I don't know" answer choice
                     if (exam.config.understanding) {
-                        makeOption(qnum, entry.answers.length, $answersList)
+                        makeOption(exam, qnum, entry.answers.length, $answersList)
                             .addClass('kind-exam-idontknow')
                             .html(exam.config.understanding);
                     }
@@ -130,7 +130,7 @@ function idFor(x) {
     return `_q${x + 1}_`;
 }
 
-function makeOption(questionIdx, answerIdx, $answerContainer) {
+function makeOption(exam, questionIdx, answerIdx, $answerContainer) {
     return $('<li class="kind-exam-choice"></li>').appendTo($answerContainer)
         .append(`<input type="radio" name="${idFor(questionIdx)}"> `)
         .click(function () {
