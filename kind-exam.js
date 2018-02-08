@@ -92,7 +92,9 @@ class Exam {
                     if (entry.input) {
                         if (entry.input.code) {
                             lineBreakRepr = '';
-                            $inputAnswer.css('white-space', 'pre');
+                            $inputAnswer
+                                .attr('spellcheck', false)
+                                .css('white-space', 'pre');
 
                             if (typeof entry.input.code === 'string')
                                 $inputAnswer.text(entry.input.code);
