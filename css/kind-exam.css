@@ -20,6 +20,10 @@
     font-size: smaller;
 }
 
+.kind-exam .kind-exam-answer[contenteditable] {
+    border: 1px solid;
+}
+
 @media screen {
     .kind-exam .kind-exam-choice {
         border: solid transparent;

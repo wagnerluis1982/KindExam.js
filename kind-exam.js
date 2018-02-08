@@ -58,24 +58,40 @@ class Exam {
                 }
 
                 // Add answer choices
-                const $answersList = $('<ol type="a"></ol>');
-                $('<dd class="kind-exam-answer"></dd>').appendTo($container)
-                    .append($answersList);
+                if (entry.answers) {
+                    const $answersList = $('<ol type="a"></ol>');
+                    $('<dd class="kind-exam-answer"></dd>').appendTo($container)
+                        .append($answersList);
 
-                entry.answers.forEach(function (answer, i) {
-                    const option = makeOption(qnum, i, $answersList);
-                    if (typeof answer === 'string') {
-                        option.text(answer);
-                    } else {
-                        option.html(answer);
+                    entry.answers.forEach(function (answer, i) {
+                        const option = makeOption(qnum, i, $answersList);
+                        if (typeof answer === 'string') {
+                            option.text(answer);
+                        } else {
+                            option.html(answer);
+                        }
+                    });
+
+                    // Add a "I don't know" answer choice
+                    if (exam.config.understanding) {
+                        makeOption(qnum, entry.answers.length, $answersList)
+                            .addClass('kind-exam-idontknow')
+                            .html(exam.config.understanding);
                     }
-                });
+                }
 
-                // Add a "I don't know" answer choice
-                if (exam.config.understanding) {
-                    makeOption(qnum, entry.answers.length, $answersList)
-                        .addClass('kind-exam-idontknow')
-                        .html(exam.config.understanding);
+                // or a text input
+                else {
+                    const $inputAnswer = $('<dd class="kind-exam-answer" contenteditable></dd>').appendTo($container)
+                        .blur(function () {
+                            exam.inputs[qnum] = this.innerText.replace(/[\r\n]/g, '');
+                        });
+
+                    if (entry.fix) {
+                        $inputAnswer
+                            .css('white-space', 'pre')
+                            .text(entry.snippet.code);
+                    }
                 }
             });
         }
