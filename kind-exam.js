@@ -84,14 +84,14 @@ class Exam {
 
                 // or a text input
                 else {
-                    const $inputAnswer = $('<dd class="kind-exam-answer" contenteditable></dd>').appendTo($container)
-                        .blur(function () {
-                            exam.inputs[qnum] = this.innerText.replace(/[\r\n]/g, '');
-                        });
+                    const $inputAnswer = $('<dd class="kind-exam-answer" contenteditable></dd>').appendTo($container);
+
+                    let lineBreakRepr = '<br>';
 
                     // check for input settings
                     if (entry.input) {
                         if (entry.input.code) {
+                            lineBreakRepr = '';
                             $inputAnswer.css('white-space', 'pre');
 
                             if (typeof entry.input.code === 'string')
@@ -101,6 +101,10 @@ class Exam {
                                 $inputAnswer.text(entry.snippet.code);
                         }
                     }
+
+                    $inputAnswer.blur(function () {
+                        exam.inputs[qnum] = this.innerText.replace(/[\r\n]/g, lineBreakRepr);
+                    });
                 }
             });
         }
