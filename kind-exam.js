@@ -63,8 +63,12 @@ class Exam {
                     .append($answersList);
 
                 entry.answers.forEach(function (answer, i) {
-                    makeOption(qnum, i, $answersList)
-                        .text(answer);
+                    const option = makeOption(qnum, i, $answersList);
+                    if (typeof answer === 'string') {
+                        option.text(answer);
+                    } else {
+                        option.html(answer);
+                    }
                 });
 
                 // Add a "I don't know" answer choice
