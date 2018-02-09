@@ -101,6 +101,9 @@ class Exam {
                             else if (entry.input.code === Exam.FIX)
                                 $inputAnswer.text(entry.snippet.code);
                         }
+                        else if (typeof entry.input === "string") {
+                            $inputAnswer.text(entry.input);
+                        }
                     }
 
                     // fill the input value on array
