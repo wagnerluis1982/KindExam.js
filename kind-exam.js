@@ -114,8 +114,8 @@ class Exam {
                     if (exam.config.understanding) {
                         $(`<input type="checkbox"> ${exam.config.understanding}</input>`).appendTo($container)
                             .click(function () {
-                                $inputAnswer.attr('contenteditable', function (_, attr) {
-                                    if (attr === '' || attr === 'true') {
+                                $inputAnswer.prop('contenteditable', function (_, val) {
+                                    if (val === 'true') {
                                         exam.inputs[qnum] = exam.config.understanding;
                                         return false;
                                     }
