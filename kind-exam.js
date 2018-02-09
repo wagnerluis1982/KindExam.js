@@ -84,7 +84,8 @@ class Exam {
 
                 // or a text input
                 else {
-                    const $inputAnswer = $('<dd class="kind-exam-answer" contenteditable></dd>').appendTo($container);
+                    const $inputAnswer = $('<dd class="kind-exam-answer" contenteditable></dd>').appendTo($container)
+                        .css('white-space', 'pre');
 
                     let lineBreakRepr = '<br>';
 
@@ -92,9 +93,7 @@ class Exam {
                     if (entry.input) {
                         if (entry.input.code) {
                             lineBreakRepr = '';
-                            $inputAnswer
-                                .attr('spellcheck', false)
-                                .css('white-space', 'pre');
+                            $inputAnswer.attr('spellcheck', false);
 
                             if (typeof entry.input.code === 'string')
                                 $inputAnswer.text(entry.input.code);
