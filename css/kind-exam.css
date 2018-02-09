@@ -23,6 +23,7 @@
 .kind-exam .kind-exam-answer[contenteditable] {
     border: 1px solid;
     padding: 0.25em;
+    min-height: 8ch;
 }
 
 .kind-exam .kind-exam-answer[contenteditable='false'] {
