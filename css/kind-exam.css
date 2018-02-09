@@ -25,6 +25,10 @@
     padding: 0.25em;
 }
 
+.kind-exam .kind-exam-answer[contenteditable='false'] {
+    opacity: 0.5;
+}
+
 @media screen {
     .kind-exam .kind-exam-choice {
         border: solid transparent;

@@ -104,9 +104,28 @@ class Exam {
                         }
                     }
 
-                    $inputAnswer.blur(function () {
+                    // fill the input value on array
+                    const fillInput = function () {
                         exam.inputs[qnum] = this.innerText.replace(/[\r\n]/g, lineBreakRepr);
-                    });
+                    };
+                    $inputAnswer.blur(fillInput);
+
+                    // Add a "I don't know" answer choice
+                    if (exam.config.understanding) {
+                        $(`<input type="checkbox"> ${exam.config.understanding}</input>`).appendTo($container)
+                            .click(function () {
+                                $inputAnswer.attr('contenteditable', function (_, attr) {
+                                    if (attr === '' || attr === 'true') {
+                                        exam.inputs[qnum] = exam.config.understanding;
+                                        return false;
+                                    }
+                                    else {
+                                        fillInput.call(this);
+                                        return true;
+                                    }
+                                });
+                            });
+                    }
                 }
             });
         }
