@@ -54,8 +54,11 @@ class Exam {
 
                 // Add <pre>code</pre> if needed
                 if (entry.snippet !== undefined) {
-                    $('<pre></pre>').appendTo($container)
-                        .text(entry.snippet.code)
+                    const element = entry.snippet.ext === 'render'
+                        ? $('<div></div>').html(entry.snippet.code)
+                        : $('<pre></pre>').text(entry.snippet.code);
+
+                    element.appendTo($container)
                         .wrap('<dd class="kind-exam-description"></dd>');
                 }
 

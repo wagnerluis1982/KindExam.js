@@ -8,6 +8,11 @@
     vertical-align: middle;
 }
 
+.kind-exam .kind-exam-description > div {
+    padding: 1ch;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .kind-exam .kind-exam-choice > :first-child {
     display: table-row;
 }
