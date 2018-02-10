@@ -167,14 +167,28 @@ function idFor(x) {
 }
 
 function makeChoice(exam, questionIdx, answerIdx, $answerContainer) {
-    return $('<li class="kind-exam-choice"></li>').appendTo($answerContainer)
-        .append(`<input type="radio" name="${idFor(questionIdx)}"> `)
+    const theLabel = $('<label></label>');
+    const spanInput = $(`<span><input type="radio" name="${idFor(questionIdx)}"></span>`);
+    const spanText = $('<span></span>');
+
+    $('<li class="kind-exam-choice"></li>').appendTo($answerContainer)
+        .append(theLabel)
         .click(function () {
-            this.firstElementChild.checked = true;
+            // Triggers the label click function
+            this.firstElementChild.click();
+        });
+
+    theLabel.append(spanInput, ' ', spanText)
+        .click(function () {
+            // Assign the selected letter in inputs array
             exam.inputs[questionIdx] = String.fromCharCode(answerIdx + 65);
-        })
-        .append('<span></span>')
-        .find('span');
+            // Make only the clicked list to have a [data-checked]
+            $(this).closest('li')
+                .attr('data-checked', '')
+                .siblings().attr('data-checked', null);
+        });
+
+    return spanText;
 }
 
 // Set a counter to show the question numbers

@@ -8,7 +8,7 @@
     vertical-align: middle;
 }
 
-.kind-exam .kind-exam-choice input:checked + span {
+.kind-exam .kind-exam-choice[data-checked] {
     font-weight: bold;
 }
 
