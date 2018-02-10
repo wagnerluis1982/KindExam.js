@@ -38,6 +38,10 @@
     font-size: smaller;
 }
 
+.kind-exam .kind-exam-answer[data-code] {
+    font-family: monospace;
+}
+
 .kind-exam .kind-exam-answer[contenteditable] {
     border: 1px solid;
     padding: 0.25em;

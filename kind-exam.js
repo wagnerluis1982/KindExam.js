@@ -90,13 +90,16 @@ class Exam {
                     const $inputAnswer = $('<dd class="kind-exam-answer" contenteditable></dd>').appendTo($container)
                         .css('white-space', 'pre');
 
+                    // the answer must be sent in one line
                     let lineBreakRepr = '<br>';
 
                     // check for input settings
                     if (entry.input) {
                         if (entry.input.code) {
                             lineBreakRepr = '';
-                            $inputAnswer.attr('spellcheck', false);
+                            $inputAnswer
+                                .attr('spellcheck', false)
+                                .attr('data-code', '');
 
                             if (typeof entry.input.code === 'string')
                                 $inputAnswer.text(entry.input.code);
