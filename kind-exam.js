@@ -70,10 +70,11 @@ class Exam {
 
                     entry.answers.forEach(function (answer, i) {
                         const $choice = makeChoice(exam, qnum, i, $answersList);
-                        if (typeof answer === 'string') {
+
+                        if (!answer.startsWith(':: ')) {
                             $choice.text(answer);
                         } else {
-                            $choice.html(answer);
+                            $choice.html(answer.substring(3));
                         }
                     });
 
