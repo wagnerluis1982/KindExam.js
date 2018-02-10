@@ -8,6 +8,19 @@
     vertical-align: middle;
 }
 
+.kind-exam .kind-exam-choice > :first-child {
+    display: table-row;
+}
+
+.kind-exam .kind-exam-choice > :first-child > * {
+    display: table-cell;
+}
+
+.kind-exam .kind-exam-choice > :first-child > :last-child {
+    width: 100%;
+    padding-left: 1ch;
+}
+
 .kind-exam .kind-exam-choice[data-checked] {
     font-weight: bold;
 }
