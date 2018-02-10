@@ -71,12 +71,12 @@ class Exam {
                     entry.answers.forEach(function (answer, i) {
                         const $choice = makeChoice(exam, qnum, i, $answersList);
 
-                        const match = answer.match(/^:([A-Za-z]*): /);
+                        const match = answer.match(/^\[:([A-Za-z]*):] /);
                         if (!match) {
                             $choice.text(answer);
                         } else {
                             const tag = match[1];
-                            const value = answer.substring(3 + tag.length);
+                            const value = answer.substring(5 + tag.length);
 
                             if (tag) {
                                 $(document.createElement(tag))
