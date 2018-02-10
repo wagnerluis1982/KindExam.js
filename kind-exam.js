@@ -71,10 +71,20 @@ class Exam {
                     entry.answers.forEach(function (answer, i) {
                         const $choice = makeChoice(exam, qnum, i, $answersList);
 
-                        if (!answer.startsWith(':: ')) {
+                        const match = answer.match(/^:([A-Za-z]*): /);
+                        if (!match) {
                             $choice.text(answer);
                         } else {
-                            $choice.html(answer.substring(3));
+                            const tag = match[1];
+                            const value = answer.substring(3 + tag.length);
+
+                            if (tag) {
+                                $(document.createElement(tag))
+                                    .appendTo($choice)
+                                    .text(value);
+                            } else {
+                                $choice.html(value);
+                            }
                         }
                     });
 
