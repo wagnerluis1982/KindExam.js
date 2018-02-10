@@ -114,7 +114,9 @@ class Exam {
 
                     // Add a "I don't know" answer choice
                     if (exam.config.understanding) {
-                        $(`<input type="checkbox"> ${exam.config.understanding}</input>`).appendTo($container)
+                        $(`<label></label>`).appendTo($container)
+                            .append('<input type="checkbox"> ', exam.config.understanding)
+                            .find('input')
                             .click(function () {
                                 $inputAnswer.prop('contenteditable', function (_, val) {
                                     if (val === 'true') {
