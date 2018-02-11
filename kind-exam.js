@@ -30,14 +30,14 @@ class Exam {
     }
 
     section(name, questions) {
-        this.sections[name] = Object.freeze(questions);
+        this.sections[name] = questions;
     }
 
     finale() {
         const exam = this;
 
         for (let name in exam.sections) {
-            const questions = exam.sections[name];
+            const questions = Object.freeze(exam.sections[name]);
             const $container = $('<dl class="kind-exam-section"></dl>');
 
             exam.$mainContainer
