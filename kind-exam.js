@@ -98,8 +98,7 @@ class Exam {
 
                 // or a text input
                 else {
-                    const $inputAnswer = $('<dd class="kind-exam-answer" contenteditable></dd>').appendTo($container)
-                        .css('white-space', 'pre');
+                    const $inputAnswer = $('<dd class="kind-exam-answer" contenteditable></dd>').appendTo($container);
 
                     // the answer must be sent in one line
                     let lineBreakRepr = '<br>';

@@ -38,14 +38,17 @@
     font-size: smaller;
 }
 
-.kind-exam .kind-exam-answer[data-code] {
-    font-family: monospace;
-}
-
 .kind-exam .kind-exam-answer[contenteditable] {
     border: 1px solid;
     padding: 0.25em;
     min-height: 8ch;
+    white-space: pre-wrap;
+}
+
+.kind-exam .kind-exam-answer[contenteditable][data-code] {
+    font-family: monospace;
+    white-space: pre;
+    overflow-x: auto;
 }
 
 .kind-exam .kind-exam-answer[contenteditable='false'] {
