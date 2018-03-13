@@ -158,7 +158,7 @@ class Exam {
                 .css('cursor', 'pointer')
                 .text(feedback.button)
                 .click(function () {
-                    const qnum = exam.inputs.findIndex(e => !e);
+                    const qnum = exam.inputs.findIndex(e => !e || !e.trim());
 
                     if (qnum !== -1) {
                         const id = idFor(qnum);
