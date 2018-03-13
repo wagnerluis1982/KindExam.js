@@ -2,6 +2,10 @@
     font-weight: bold;
 }
 
+.kind-exam .kind-exam-question > :first-child {
+    display: inline;
+}
+
 .kind-exam .kind-exam-question:before {
     margin-right: 0.5em;
     font-size: 1.5em;
